@@ -19,6 +19,7 @@
 int dc_dealStrCmd(char *uartDataBuff, int cmdLen)
 {
 	sendString(uartDataBuff, cmdLen);
+    return 0;
 }
 
 
@@ -36,33 +37,30 @@ int dc_dealBinCmd(char *uartDataBuff, int cmdLen)
 	int i;
     (void)cmdLen;
 
+    setLedToggle();
+
     cmdElement.cmdType = uartDataBuff[0];
-    cmdElement.dataLength   = uartDataBuff[1] & 0xF;
-    checksum = uartDataBuff[0] ^ uartDataBuff[1];//计算校验和
+    cmdElement.frameId = uartDataBuff[1];
+    cmdElement.dataLength   = uartDataBuff[2] & 0xF;
+    checksum = uartDataBuff[0] ^ uartDataBuff[1] ^ uartDataBuff[2];//计算校验和
 
     for(i = 0; i < cmdElement.dataLength; i++)
     {
-        cmdElement.data[i] = uartDataBuff[2+i];
+        cmdElement.data[i] = uartDataBuff[3+i];
         checksum ^= cmdElement.data[i];  ////计算校验和
     }
 
     //将Uart数据中的校验和存入cmdElement.checksum
-    cmdElement.checksum     = uartDataBuff[2+cmdElement.dataLength];
+    cmdElement.checksum     = uartDataBuff[3+cmdElement.dataLength];
 
     //校验正确加入处理队列。
     if( checksum == cmdElement.checksum )
     {
-        if( cmdElement.cmdType == C_LED_CTRL )
-        {
-            // data[1]:HIG Byte data[0]:LOW Byte 
-            changeTIMER0Task(LED_TASK_TAG, (cmdElement.data[1] << 8) + cmdElement.data[0]);
-        }
-
-        dc_sendRsp_Code(cmdElement.cmdType, C_RSP_SUCCESS);
+        dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, C_RSP_SUCCESS);
     }
     else
     {
-        dc_sendRsp_Code(cmdElement.cmdType, C_RSP_CHECKSUM_ERR);
+        dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, C_RSP_CHECKSUM_ERR);
     }
 
     return 0;
@@ -75,15 +73,18 @@ int dc_dealBinCmd(char *uartDataBuff, int cmdLen)
  * 参数介绍 ： 
  * 返回值   : 处理结果（还未定义）
  */
-int dc_sendRsp_Code(int cmdType, int rspCode)
+int dc_sendRsp_Code(int cmdType, char frameId, int rspCode)
 {
     CmdRSPFormat_t rsp;
     rsp.cmdType = cmdType;
+    rsp.frameId = frameId;
     rsp.rspCode = rspCode;
-    rsp.checksum = cmdType^rspCode;
+    rsp.checksum = cmdType ^ frameId ^ rspCode;
 	sendString((char*)rsp,sizeof(rsp));
 
     dc_sendCmdEnd();
+
+    return 0;
 }
 
 

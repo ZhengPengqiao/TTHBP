@@ -15,6 +15,5 @@
 
 // 定义任务TAG
 #define SHELL_TASK_TAG  1   //定义shell解析任务的TAG
-#define LED_TASK_TAG    2   //定义LED闪烁任务的TAG
 
 #endif

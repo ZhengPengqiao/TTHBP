@@ -31,13 +31,15 @@ int dc_dealBinCmd(char *uartDataBuff, int cmdLen);
 int dc_dealStrCmd(char *uartDataBuff, int cmdLen);
 
 
-/*
- * 函数名称 ： dc_sendRsp_Code
- * 函数介绍 ： 将指定的响应状态发送到串口
- * 参数介绍 ： 
- * 返回值   : 处理结果（还未定义）
+/**
+ * @brief dc_sendRsp_Code
+ * 
+ * @param cmdType : 指令类型
+ * @param frameId : frame id. 叠加的
+ * @param rspCode : 响应码
+ * @return int : 0:OK -1:Err
  */
-int dc_sendRsp_Code(int cmdType, int rspCode);
+int dc_sendRsp_Code(int cmdType, char frameId, int rspCode);
 
 
 /**********************************************************************

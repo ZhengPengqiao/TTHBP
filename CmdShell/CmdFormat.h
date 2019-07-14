@@ -12,6 +12,7 @@
 
 /**
  * @brief 如果开头的两个字符是">:", 就说明是字符模式
+ * 		  二进制协议中的头两个字节不能是0x3e 0x3a
  */
 #define UARTSTRCHARFIRST 	0x3e  	// STR指令开始字符1 '>'
 #define UARTSTRCHARSECOND 	0x3a  	// STR指令开始字符2 ':'
@@ -25,18 +26,8 @@
 /**
  * @brief cmdType:定义指令类型
  */
-#define C_LED_CTRL 	0x1  // 配置LED闪烁频率的指令
-#define C_RUN_LINE 	0x2  // 运行指定的指令
-#define C_RET_STAT 	0x3  // 请求指定的状态
-
-/**
- * @brief 指令定义
- * - 1. LED闪烁频率
- * 		cmdType: C_LED_CTRL
- * 		dataLength: 0x02 //数据长度为2
- * 		data[0]: val_L	 //配置闪烁周期MS(低字节)
- * 		data[1]: val_H	 //配置闪烁周期MS(高字节)
- */
+#define C_RUN_LINE 	0x1  // 运行指定的指令
+#define C_RET_STAT 	0x2  // 请求指定的状态
 
 
 /**
@@ -50,6 +41,7 @@
 typedef struct CmdFormat
 {
 	char cmdType; 	 	    //指令编号
+	char frameId;			//循环指令的frame号
 	char dataLength;  	    //指令数据长度
     unsigned char data[16]; //可变的，长度由dataLength决定，按照其中的bit执行指定的
 	                        //操作，长度在0~15byte之间
@@ -59,6 +51,7 @@ typedef struct CmdFormat
 typedef struct CmdRSPFormat
 {
 	char cmdType;           //指令编号
+	char frameId;			//循环指令的frame号
 	char rspCode;       	//返回码
 	char checksum;          //校验码
 }CmdRSPFormat_t;
