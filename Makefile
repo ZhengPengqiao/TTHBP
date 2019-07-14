@@ -1,6 +1,6 @@
 #找到所有的源文件
 SRC := main.c  ./TIMER/TIMER.c 	./LED/LED.c ./I2C/I2C.c ./UART/UART.c \
-	./CmdShell/CmdShell.c ./CmdShell/CmdDeal.c
+	./CmdShell/CmdShell.c ./CmdShell/CmdDeal.c ./CmdShell/CmdFun.c
 
 #找到所有的头文件路径
 INCLUDE := $(shell find ./ -name "*.h")

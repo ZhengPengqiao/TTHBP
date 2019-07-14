@@ -8,8 +8,6 @@
 
 void main()
 {
-	int i;
-
 	initUart(SYS_UART_RATE);
 	sendString("system init ok",sizeof("system init ok"));
 	sendNewLine();

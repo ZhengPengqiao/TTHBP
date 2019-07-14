@@ -30,7 +30,6 @@ int dc_dealBinCmd(char *uartDataBuff, int cmdLen);
  */
 int dc_dealStrCmd(char *uartDataBuff, int cmdLen);
 
-
 /**
  * @brief dc_sendRsp_Code
  * 

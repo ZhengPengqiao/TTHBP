@@ -14,4 +14,6 @@
 #include "CmdFormat.h"
 
 
+int setPin_Status(char pin, char status);
+
 #endif //__CMDFUN_H_

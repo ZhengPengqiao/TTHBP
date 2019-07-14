@@ -7,6 +7,8 @@
 
 #include "CmdDeal.h"
 #include "TIMER.h"
+#include "CmdFun.h"
+#include "LED.h"
 
 
 /*
@@ -28,13 +30,14 @@ int dc_dealStrCmd(char *uartDataBuff, int cmdLen)
  * 函数介绍 ： 处理二进制指令
  * 参数介绍 ： uartDataBuff : 缓存命令的字符串
  *           cmdLen ： 第一条命令的长度
- * 返回值   : 处理结果（还未定义）
+ * 返回值   : 0:Ok 其他:Err
  */
 int dc_dealBinCmd(char *uartDataBuff, int cmdLen)
 {
     CmdFormat_t cmdElement;
 	char checksum;
 	int i;
+    int ret = 0;
     (void)cmdLen;
 
     setLedToggle();
@@ -56,14 +59,43 @@ int dc_dealBinCmd(char *uartDataBuff, int cmdLen)
     //校验正确加入处理队列。
     if( checksum == cmdElement.checksum )
     {
-        dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, C_RSP_SUCCESS);
+        switch ( cmdElement.cmdType )
+        {
+            case C_PIN_SET:
+            {
+                ret = setPin_Status(cmdElement.data[0], cmdElement.data[1]);
+                if( ret == 0 )
+                {
+                    dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, C_RSP_SUCCESS);
+                    return C_RSP_SUCCESS;
+                }
+                else
+                {
+                    dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, ret);
+                    return ret;
+                }
+            }
+            break;
+            case C_PIN_GET:
+            {
+            }
+            break;
+            
+            default:
+            {
+                dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, C_RSP_UNDEFINE);
+                return C_RSP_UNDEFINE;
+            }
+            break;
+        } 
     }
     else
     {
         dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, C_RSP_CHECKSUM_ERR);
+        return C_RSP_CHECKSUM_ERR;
     }
 
-    return 0;
+    return C_RSP_RUN_ERR;
 }
 
 
@@ -76,10 +108,11 @@ int dc_dealBinCmd(char *uartDataBuff, int cmdLen)
 int dc_sendRsp_Code(int cmdType, char frameId, int rspCode)
 {
     CmdRSPFormat_t rsp;
-    rsp.cmdType = cmdType;
+    rsp.cmdType = C_CMD_RSP;
+    rsp.cmdTypeRsp = cmdType;
     rsp.frameId = frameId;
     rsp.rspCode = rspCode;
-    rsp.checksum = cmdType ^ frameId ^ rspCode;
+    rsp.checksum = C_CMD_RSP ^ cmdType ^ frameId ^ rspCode;
 	sendString((char*)rsp,sizeof(rsp));
 
     dc_sendCmdEnd();
