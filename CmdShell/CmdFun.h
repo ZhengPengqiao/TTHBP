@@ -15,5 +15,6 @@
 
 
 int setPin_Status(char pin, char status);
+int getPin_Status(char pin, char *val);
 
 #endif //__CMDFUN_H_

@@ -167,3 +167,356 @@ int setPin_Status(char pin, char status)
     }
     return C_RSP_SUCCESS;
 }
+
+
+/**
+ * @brief Get the Pin Status object
+ * 
+ * @param pin  : 需要配置的引脚
+ * @param val  : 获取引脚的状态
+ * @return int 
+ *  C_RSP_SUCCESS           :Ok 
+ *  C_RSP_PIN_PINID_INVALID :pin参数错误
+ *  C_RSP_PIN_VAL_INVALID   :状态值非法
+ */
+int getPin_Status(char pin, char *val)
+{
+    switch (pin)
+    {
+    case C_PIN_P0_PIN0:
+        *val = P0_PIN0;
+        break;
+    case C_PIN_P0_PIN1:
+        *val = P0_PIN1;
+        break;
+    case C_PIN_P0_PIN2:
+        *val = P0_PIN2;
+        break;
+    case C_PIN_P0_PIN3:
+        *val = P0_PIN3;
+        break;
+    case C_PIN_P0_PIN4:
+        *val = P0_PIN4 ;
+        break;
+    case C_PIN_P0_PIN5:
+        *val = P0_PIN5 ;
+        break;
+    case C_PIN_P0_PIN6:
+        *val = P0_PIN6 ;
+        break;
+    case C_PIN_P0_PIN7:
+        *val = P0_PIN7 ;
+        break;
+    case C_PIN_P0_ALL:
+        *val = P0_ALL ;
+        break;
+    case C_PIN_P1_PIN0:
+        *val = P1_PIN0 ;
+        break;
+    case C_PIN_P1_PIN1:
+        *val = P1_PIN1 ;
+        break;
+    case C_PIN_P1_PIN2:
+        *val = P1_PIN2 ;
+        break;
+    case C_PIN_P1_PIN3:
+        *val = P1_PIN3 ;
+        break;
+    case C_PIN_P1_PIN4:
+        *val = P1_PIN4 ;
+        break;
+    case C_PIN_P1_PIN5:
+        *val = P1_PIN5 ;
+        break;
+    case C_PIN_P1_PIN6:
+        *val = P1_PIN6 ;
+        break;
+    case C_PIN_P1_PIN7:
+        *val = P1_PIN7 ;
+        break;
+    case C_PIN_P1_ALL:
+        *val = P1_ALL ;
+        break;
+    case C_PIN_P2_PIN0:
+        *val = P2_PIN0 ;
+        break;
+    case C_PIN_P2_PIN1:
+        *val = P2_PIN1 ;
+        break;
+    case C_PIN_P2_PIN2:
+        *val = P2_PIN2 ;
+        break;
+    case C_PIN_P2_PIN3:
+        *val = P2_PIN3 ;
+        break;
+    case C_PIN_P2_PIN4:
+        *val = P2_PIN4 ;
+        break;
+    case C_PIN_P2_PIN5:
+        *val = P2_PIN5 ;
+        break;
+    case C_PIN_P2_PIN6:
+        *val = P2_PIN6 ;
+        break;
+    case C_PIN_P2_PIN7:
+        *val = P2_PIN7 ;
+        break;
+    case C_PIN_P2_ALL:
+        *val = P2_ALL ;
+        break;
+    case C_PIN_P3_PIN0:
+        *val = P3_PIN0 ;
+        break;
+    case C_PIN_P3_PIN1:
+        *val = P3_PIN1 ;
+        break;
+    case C_PIN_P3_PIN2:
+        *val = P3_PIN2 ;
+        break;
+    case C_PIN_P3_PIN3:
+        *val = P3_PIN3 ;
+        break;
+    case C_PIN_P3_PIN4:
+        *val = P3_PIN4 ;
+        break;
+    case C_PIN_P3_PIN5:
+        *val = P3_PIN5 ;
+        break;
+    case C_PIN_P3_PIN6:
+        *val = P3_PIN6 ;
+        break;
+    case C_PIN_P3_PIN7:
+        *val = P3_PIN7 ;
+        break;
+    case C_PIN_P3_ALL:
+        *val = P3_ALL ;
+        break;
+    case C_PIN_P4_PIN0:
+        *val = P4_PIN0 ;
+        break;
+    case C_PIN_P4_PIN1:
+        *val = P4_PIN1 ;
+        break;
+    case C_PIN_P4_PIN2:
+        *val = P4_PIN2 ;
+        break;
+    case C_PIN_P4_PIN3:
+        *val = P4_PIN3 ;
+        break;
+    case C_PIN_P4_ALL:
+        *val = P4_ALL ;
+        break;
+    default:
+        return C_RSP_PIN_PINID_INVALID;
+    }
+    return C_RSP_SUCCESS;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
