@@ -10,6 +10,7 @@
 #include "CmdFun.h"
 #include "LED.h"
 
+char data1;
 
 /*
  * 函数名称 ： dc_dealStrCmd
@@ -78,6 +79,17 @@ int dc_dealBinCmd(char *uartDataBuff, int cmdLen)
             break;
             case C_PIN_GET:
             {
+                ret = getPin_Status(cmdElement.data[0], &data1);
+                if( ret == 0 )
+                {
+                    dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, C_RSP_SUCCESS);
+                    return C_RSP_SUCCESS;
+                }
+                else
+                {
+                    dc_sendRsp_Code(cmdElement.cmdType, cmdElement.frameId, ret);
+                    return ret;
+                }
             }
             break;
             
@@ -112,7 +124,8 @@ int dc_sendRsp_Code(int cmdType, char frameId, int rspCode)
     rsp.cmdTypeRsp = cmdType;
     rsp.frameId = frameId;
     rsp.rspCode = rspCode;
-    rsp.checksum = C_CMD_RSP ^ cmdType ^ frameId ^ rspCode;
+    rsp.data1 = data1;
+    rsp.checksum = C_CMD_RSP ^ cmdType ^ frameId ^ rspCode ^ rsp.data1;
 	sendString((char*)rsp,sizeof(rsp));
 
     dc_sendCmdEnd();

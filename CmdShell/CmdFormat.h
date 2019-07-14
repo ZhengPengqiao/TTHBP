@@ -126,6 +126,7 @@ typedef struct CmdRSPFormat
 	char cmdTypeRsp;		//相应的那个指令类型
 	char frameId;			//循环指令的frame号
 	char rspCode;       	//返回码
+	char data1;				//携带一个数据信息
 	char checksum;          //校验码
 }CmdRSPFormat_t;
 
