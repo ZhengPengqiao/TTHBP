@@ -121,10 +121,12 @@ int setPin_Status(char pin, char status)
         P2_ALL = val;
         break;
     case C_PIN_P3_PIN0:
-        P3_PIN0 = val;
+        // P3_PIN0 = val;
+        return C_RSP_RUN_ERR;
         break;
     case C_PIN_P3_PIN1:
-        P3_PIN1 = val;
+        // P3_PIN1 = val;
+        return C_RSP_RUN_ERR;
         break;
     case C_PIN_P3_PIN2:
         P3_PIN2 = val;
@@ -145,7 +147,7 @@ int setPin_Status(char pin, char status)
         P3_PIN7 = val;
         break;
     case C_PIN_P3_ALL:
-        P3_ALL = val;
+        P3_ALL = (val&0xFC) | (P3_ALL&0x03);
         break;
     case C_PIN_P4_PIN0:
         P4_PIN0 = val;

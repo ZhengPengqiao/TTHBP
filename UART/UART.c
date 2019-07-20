@@ -18,7 +18,6 @@ void InterruptUART() __interrupt 4
 	{
 		RI = 0;
 		UART0_CHAR[end] = SBUF;
-		
 		end++;
 		if(end >= RX_BUFFER_SIZE )
 			end = 0;

@@ -147,7 +147,7 @@ int dc_sendRsp_Code(int cmdType, char frameId, int rspCode)
 void dc_sendCmdEnd()
 {
     char str[2];
-    str[0] = 0x0A;
-    str[1] = 0x05;
+    str[0] = UARTENDCHARFIRST;
+    str[1] = UARTENDCHARSECOND;
 	sendString(str,2);
 }
