@@ -6,27 +6,25 @@
 
 #define SYS_UART_RATE 9600 //配置系统串口的波特率
 
-/*
- * 函数名称 ： ledThread
- * 函数介绍 ： 定时刷新LED灯
- * 返回值   : NULL
- */
-void ledThread()
-{
-	setLedToggle();
-}
-
 void main()
 {
+	int i = 0;
+
 	initUart(SYS_UART_RATE);
 	sendString("system init ok",sizeof("system init ok"));
 	sendNewLine();
 
-	addTIMER0Task(1000, ledThread, LED_TASK_TAG);
+	// 去掉定时器, 保证串口数据的性能
 
 	while(1)
 	{
-		updateTIMER0();
+		if( i > 5000 )
+		{
+			setLedToggle();
+			i = 0;
+		}
+		i++;
+
 		binShellThread();
 	}
 }
